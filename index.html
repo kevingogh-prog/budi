@@ -286,4 +286,60 @@ class:"card",style:"display:grid;gap:8px"},A("h3",null,"People"),A("div",{style:
 class:"card"},A("p",{class:"err"},String(e.message||e))))}))}"admin"===a.view?(w="admin",Y()):f("state").then((e=>{T(e),
 e.profile&&(h.profile=Object.assign({},h.profile,e.profile)),R()})).catch((e=>{W.replaceChildren(A("section",{class:"card"},A("p",{class:"err"
 },"BUDI couldn't load. Check your connection and reload.")))}))}();</script>
+<style>
+.vfab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:60px;height:60px;border-radius:50%;border:0;background:var(--sun);color:var(--sun-ink);box-shadow:0 6px 20px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;z-index:30;cursor:pointer}
+.vfab.on{background:var(--danger);color:#fff;animation:pulse 1.2s ease-in-out infinite}
+.vpill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);background:var(--card);color:var(--ink);border:1px solid var(--line);padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600;z-index:31;box-shadow:0 4px 14px rgba(0,0,0,.14);text-align:center}
+.vfab[hidden],.vpill[hidden]{display:none}
+main{padding-bottom:72px}
+</style><script>!function(){var e=window.SpeechRecognition||window.webkitSpeechRecognition;if(e){
+var t=!1,n=null,i=null,o=null,a=null,r='<svg width="22" height="26" viewBox="0 0 22 26" aria-hidden="true"><rect x="6" y="1" width="10" height="15" rx="5" fill="currentColor"/><path d="M2 12c0 5 4 9 9 9s9-4 9-9M11 21v4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>'
+;document.addEventListener("click",(function(e){e.target&&e.target.closest&&e.target.closest(".icon.mic")&&(e.stopPropagation(),e.preventDefault(),p())}),!0);var l=0
+;"loading"===document.readyState?document.addEventListener("DOMContentLoaded",T):T()}function d(e){return document.querySelector(e)}function u(e){
+return Array.prototype.slice.call(document.querySelectorAll(e))}function c(e){return String(e||"").toLowerCase().replace(/[^a-z0-9: ]+/g," ").replace(/\s+/g," ").trim()}
+function s(e,t){e=" "+e+" ";for(var n=0;n<t.length;n++)if(e.indexOf(" "+t[n]+" ")>=0)return!0;return!1}function g(e){return e=c(e),u("main button").filter((function(t){
+return!t.disabled&&c(t.textContent)===e}))[0]||null}function f(e){var t=g(e);return!!t&&(t.click(),y("✓ "+t.textContent.trim()),!0)}function h(){
+i||((i=document.createElement("div")).className="vpill",i.setAttribute("role","status"),i.hidden=!0,document.body.appendChild(i)),
+o||((o=document.createElement("button")).className="vfab",o.type="button",o.setAttribute("aria-label","Talk to BUDI"),o.innerHTML=r,o.addEventListener("click",p),
+document.body.appendChild(o))}function y(e,n){h(),i.textContent=e,i.hidden=!1,clearTimeout(y.t),n||(y.t=setTimeout((function(){t?i.textContent="Listening… just talk":i.hidden=!0
+}),2500))}function m(){h(),o.hidden=!!d(".compose"),o.classList.toggle("on",t),o.setAttribute("aria-label",t?"Stop talking":"Talk to BUDI"),u(".icon.mic").forEach((function(e){
+e.classList.toggle("on",t),e.setAttribute("aria-label",t?"Stop talking":"Speak")}));var e=d("#msg");e&&(e.placeholder=t?"Listening… just talk":"Type or speak your answer")
+;var n=document.getElementById("vhint");n&&t&&n.remove()}function p(){t?k():(t=!0,m(),y("Listening… just talk. Tap the mic again to stop."),v())}function k(){if(t=!1,
+clearTimeout(a),n){var e=n;n=null,e.onend=null;try{e.stop()}catch(e){}}m(),i&&(i.hidden=!0)}function v(){if(t&&!n){var i;try{i=new e}catch(e){return void k()}n=i,i.lang="en-US",
+i.continuous=!0,i.interimResults=!0,i.onresult=function(e){for(var t="",n=e.resultIndex;n<e.results.length;n++){var i=e.results[n];if(i.isFinal){
+var o=String(i[0].transcript||"").trim();o&&b(o)}else t+=i[0].transcript}t.trim()&&y("“"+t.trim()+"”",!0)},i.onerror=function(e){
+"not-allowed"!==e.error&&"service-not-allowed"!==e.error&&"audio-capture"!==e.error||(k(),y("Microphone is blocked. Allow it for this page, or type."))},i.onend=function(){
+n===i&&(n=null),t&&(a=setTimeout((function(){v(),!n&&t&&(t=!1,m(),y("Tap the mic to keep talking"))}),250))};try{i.start()}catch(e){n=null,t=!1,m(),y("Tap the mic to keep talking")
+}}}function w(e){var t=d("#msg"),n=d(".icon.send");return!(!t||!n)&&(t.value=e,n.click(),setTimeout(m,60),!0)}function b(e){var t=c(e);if(t&&(y("“"+e+"”"),!w(e))){
+var n=g("Start")||g("Continue")
+;if(n)return n.click(),void((t.split(" ").length>2||!s(t,["start","begin","continue","yes","ok","okay","hi","hello","hey","go","let s go","lets go"]))&&setTimeout((function(){w(e)
+}),150));if(g("Accept")){if(s(t,["no","not now","pass","skip","next","someone else","nope","decline","no thanks"]))return f("Not now")
+;if(s(t,["accept","yes","yeah","yep","sure","ok","okay","great","sounds good","let s do it","lets do it","deal","go ahead","perfect"]))return f("Accept")}
+if(g("Cancel and look again")&&s(t,["cancel","look again","someone else","no"]))return f("Cancel and look again");if(g("Find my buddy")){
+if(s(t,["change","update","edit","wrong"]))return f("Tell BUDI what to change"),void(t.split(" ").length>3&&setTimeout((function(){w(e)}),150))
+;if(s(t,["find","match","search","go","yes","buddy","ok","okay","looks good","correct","right"]))return f("Find my buddy")}if(g("Try again")){
+if(s(t,["change","update","edit"]))return f("Change my profile");if(s(t,["try","again","retry","search","find"]))return f("Try again")}if(g("Save our plan"))return function(e,t){
+var n,i={monday:0,mon:0,tuesday:1,tue:1,tues:1,wednesday:2,wed:2,thursday:3,thu:3,thurs:3,friday:4,fri:4,saturday:5,sat:5,sunday:6,sun:6},o=[],a=!1
+;for(n in i)s(t,[n,n+"s"])&&o.indexOf(i[n])<0&&o.push(i[n]);s(t,["weekdays","every weekday"])&&(o=[0,1,2,3,4]),s(t,["weekend","weekends"])&&(o.indexOf(5)<0&&o.push(5),
+o.indexOf(6)<0&&o.push(6)),s(t,["every day","everyday","daily"])&&(o=[0,1,2,3,4,5,6]),o.length&&(a=!0,["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].forEach((function(e,t){
+var n=u(".days .chip").filter((function(t){return t.textContent===e}))[0];n&&"true"===n.getAttribute("aria-pressed")!=o.indexOf(t)>=0&&n.click()})))
+;var r,l=null,c=t.match(/\b(\d{1,2})(?::(\d{2})|\s(\d{2})(?=\s*(?:a ?m|p ?m)\b))?\s*(a ?m|p ?m|o clock)?\b/);if(c&&+c[1]>=1&&+c[1]<=23){
+var g=+c[1],h=c[2]||c[3]||"00",m=(c[4]||"").replace(/ /g,"");"pm"===m&&g<12&&(g+=12),"am"===m&&12===g&&(g=0),!m&&g<7&&(g+=12),l=((r=g)<10?"0":"")+r+":"+h
+}else s(t,["noon","midday"])?l="12:00":s(t,["lunch","lunchtime"])?l="12:30":s(t,["morning"])?l="07:30":s(t,["evening","after work","night"])&&(l="18:30")
+;l&&d("#ptime")&&(d("#ptime").value=l,a=!0)
+;for(var p=[["walking",["walk","walking","stroll","hike"]],["running",["run","running","jog","jogging"]],["gym",["gym","weights","workout"]],["yoga",["yoga","pilates","stretching"]],["cycling",["cycle","cycling","bike","biking","ride"]],["swimming",["swim","swimming"]]],k=0;k<p.length;k++)if(s(t,p[k][1])&&d("#pact")){
+d("#pact").value=p[k][0],a=!0;break}var v=e.match(/\b(?:at|in|near|by)\s+(?:the\s+)?([A-Za-z][A-Za-z'\- ]{2,40}?)\s*(?:$|[,.!?]|\s(?:on|at|every|and|then|please|save)\b)/i)
+;if(v&&!/^(monday|tuesday|wednesday|thursday|friday|saturday|sunday|weekends?|weekdays?|lunch|noon|midday|morning|evening|night|the morning|the evening|work)\b/i.test(v[1])&&d("#pplace")&&(d("#pplace").value=v[1].trim(),
+a=!0),s(t,["save","confirm","yes","ok","okay","sounds good","perfect","great","that s it","done","looks good"]))return f("Save our plan")
+;y(a?"Got it. Say “save” to confirm the plan.":"Tell me days, time and activity, e.g. “Monday and Thursday at 7 pm, running”.")}(e,t);if(g("Change plan")){
+if(s(t,["undo"]))return f("Undo")
+;if(s(t,["not today","rest","skip","can t","cant","cannot","busy","no"]))return f("Not today")||y("Today is already logged. Say “undo” to change it.")
+;if(s(t,["done","did it","finished","completed","checked in","check in","yes","walked","ran","went","complete"]))return f("Done")||y("Already checked in today 👍")
+;if(s(t,["nudge","remind","poke"]))return f("Send a nudge")||y("You've already sent one today.")
+;if(s(t,["cheer","well done","great job","congrats","congratulations","good job"]))return f("Send a cheer")||y("You've already sent one today.")
+;if(s(t,["change plan","new plan","reschedule","plan","change the plan"]))return f("Change plan");if(s(t,["talk","update","profile","change"]))return f("Talk to BUDI"),
+void(t.split(" ").length>3&&setTimeout((function(){w(e)}),150))}for(var i=u("main button").filter((function(e){return!e.disabled&&c(e.textContent).length>1})),o=0;o<i.length;o++){
+var a=c(i[o].textContent);if(t===a||(" "+t+" ").indexOf(" "+a+" ")>=0)return i[o].click(),void y("✓ "+i[o].textContent.trim())}
+y("Didn't catch that. Try “accept”, “find my buddy” or “done”.")}}function T(){h(),m(),new MutationObserver((function(){l||(l=1,requestAnimationFrame((function(){l=0,m()})))
+})).observe(document.getElementById("main"),{childList:!0,subtree:!0})}}();</script>
 </body></html>
